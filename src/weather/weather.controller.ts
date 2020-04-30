@@ -6,7 +6,8 @@ export class WeatherController {
   constructor(private readonly weatherService: WeatherService) {}
 
   @Get(':city')
-  getWeather(@Param('city') city: string): object {
+  // we are using q in the parameters to match the api usage
+  getWeather(@Param('q') city: string): object {
     return this.weatherService.forCity(city);
   }
 }

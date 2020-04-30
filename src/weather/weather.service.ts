@@ -1,7 +1,7 @@
 import { Injectable, HttpService } from '@nestjs/common';
 import { AxiosResponse } from 'axios';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class WeatherService {
@@ -9,6 +9,7 @@ export class WeatherService {
 
   forCity(city: string): Observable<AxiosResponse<object>> {
     return this.httpService.get(`?q=${city}`).pipe(
+      map(response => response.data),
       catchError(err => {
         throw `error in weather service: ${err}`;
       })
