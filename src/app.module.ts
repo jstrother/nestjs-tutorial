@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ItemsModule } from './items/items.module';
@@ -12,7 +12,15 @@ import { WeatherModule } from './weather/weather.module';
       isGlobal: true,
     }),
     ItemsModule,
-    MongooseModule.forRoot(process.env.DATABASE_URI),
+    // async registration for the win
+    MongooseModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        uri: config.get('DATABASE_URI'),
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+      })
+    }),
     WeatherModule,
   ],
   controllers: [AppController],
