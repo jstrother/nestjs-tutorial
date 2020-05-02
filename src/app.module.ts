@@ -18,8 +18,8 @@ import { WeatherModule } from './weather/weather.module';
       useFactory: (config: ConfigService) => ({
         uri: config.get('DATABASE_URI'),
         useNewUrlParser: true,
-        useUnifiedTopology: true
-      })
+        useUnifiedTopology: true,
+      }),
     }),
     WeatherModule,
   ],
