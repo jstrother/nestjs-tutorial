@@ -14,6 +14,6 @@ export class WeatherController {
 
   @Post()
   saveWeather(@Body() createWeatherDto: CreateWeatherDto): Promise<Weather> {
-    return;
+    return this.weatherService.createWeather(createWeatherDto);
   }
 }
