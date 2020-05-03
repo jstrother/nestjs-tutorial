@@ -1,10 +1,10 @@
 export interface Weather {
   id?: string;
   city: string;
-  weather: {
+  weather: [{
     type: string;
     description: string;
-  };
+  }];
   temperature: {
     actual: number;
     feelsLike: number;

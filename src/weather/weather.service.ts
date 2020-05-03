@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { AxiosResponse } from 'axios';
 // import { Observable } from 'rxjs';
-import { catchError, map, scan } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Model } from 'mongoose';
 import { Weather } from './interfaces/weather.interface';
 
@@ -23,13 +23,27 @@ export class WeatherService {
     return this.httpService
       .get(`${this.url}${city}${this.appid}`)
       .pipe(
-        map(({ data }: AxiosResponse): object => data),
-        scan((data) => {
-          console.log('data', data);
-          // return {
-          //   city: data.name,
-          // };
-          return {};
+        map(({ data }: AxiosResponse): object => {
+          const cityWeather = {
+            city: data.name,
+            weather: data.weather.map((typeOfWeather) => {
+              return {
+                type: typeOfWeather.main,
+                description: typeOfWeather.description,
+              };
+            }),
+            temperature: {
+              actual: data.main.temp,
+              feelsLike: data.main.feels_like,
+              min: data.main.temp_min,
+              max: data.main.temp_max,
+            },
+            time: new Date(data.dt * 1000).toLocaleString(),
+          };
+
+          this.weatherModel(cityWeather).save();
+
+          return cityWeather;
         }),
         catchError((err) => {
           throw `error in weather service: ${err}`;
