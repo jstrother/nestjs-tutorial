@@ -1,4 +1,6 @@
-export interface Weather {
+import { Document } from 'mongoose';
+
+export interface Weather extends Document {
   id?: string;
   city: string;
   weather: [{
@@ -6,9 +8,9 @@ export interface Weather {
     description: string;
   }];
   temperature: {
-    actual: number;
-    feelsLike: number;
-    min: number;
-    max: number;
+    actual: string;
+    feelsLike: string;
+    min: string;
+    max: string;
   };
 }

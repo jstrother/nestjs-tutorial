@@ -6,6 +6,7 @@ import { AxiosResponse } from 'axios';
 import { catchError, map } from 'rxjs/operators';
 import { Model } from 'mongoose';
 import { Weather } from './interfaces/weather.interface';
+import { convertKelvin } from '../functions/convertKelvin';
 
 @Injectable()
 export class WeatherService {
@@ -24,7 +25,7 @@ export class WeatherService {
       .get(`${this.url}${city}${this.appid}`)
       .pipe(
         map(({ data }: AxiosResponse): object => {
-          const cityWeather = {
+          const cityWeather: object = {
             city: data.name,
             weather: data.weather.map((typeOfWeather) => {
               return {
@@ -33,10 +34,10 @@ export class WeatherService {
               };
             }),
             temperature: {
-              actual: data.main.temp,
-              feelsLike: data.main.feels_like,
-              min: data.main.temp_min,
-              max: data.main.temp_max,
+              actual: convertKelvin(data.main.temp),
+              feelsLike: convertKelvin(data.main.feels_like),
+              min: convertKelvin(data.main.temp_min),
+              max: convertKelvin(data.main.temp_max),
             },
             time: new Date(data.dt * 1000).toLocaleString(),
           };
@@ -49,9 +50,5 @@ export class WeatherService {
           throw `error in weather service: ${err}`;
         }),
       );
-  }
-
-  async createWeather(weather: Weather): Promise<Weather> {
-    return await this.weatherModel(weather).save();
   }
 }

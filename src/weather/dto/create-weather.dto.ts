@@ -5,9 +5,9 @@ export class CreateWeatherDto {
     readonly description: string;
   }];
   readonly temperature: {
-    readonly actual: number;
-    readonly feelsLike: number;
-    readonly min: number;
-    readonly max: number;
+    readonly actual: string;
+    readonly feelsLike: string;
+    readonly min: string;
+    readonly max: string;
   };
 }

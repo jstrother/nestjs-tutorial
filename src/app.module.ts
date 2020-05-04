@@ -11,7 +11,6 @@ import { WeatherModule } from './weather/weather.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    ItemsModule,
     // async registration for the win
     MongooseModule.forRootAsync({
       inject: [ConfigService],
@@ -21,6 +20,7 @@ import { WeatherModule } from './weather/weather.module';
         useUnifiedTopology: true,
       }),
     }),
+    ItemsModule,
     WeatherModule,
   ],
   controllers: [AppController],

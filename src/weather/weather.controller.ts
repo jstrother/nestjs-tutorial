@@ -11,9 +11,4 @@ export class WeatherController {
   getWeather(@Param('city') city: string): object {
     return this.weatherService.forCity(city);
   }
-
-  @Post()
-  saveWeather(@Body() createWeatherDto: CreateWeatherDto): Promise<Weather> {
-    return this.weatherService.createWeather(createWeatherDto);
-  }
 }

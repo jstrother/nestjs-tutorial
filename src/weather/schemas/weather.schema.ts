@@ -7,10 +7,10 @@ export const WeatherSchema = new Schema({
     description: String,
   }],
   temperature: {
-    actual: Number,
-    feelsLike: Number,
-    min: Number,
-    max: Number,
+    actual: String,
+    feelsLike: String,
+    min: String,
+    max: String,
   },
   time: Date,
 });
