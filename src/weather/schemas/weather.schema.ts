@@ -3,7 +3,7 @@ import { Schema } from 'mongoose';
 export const WeatherSchema = new Schema({
   city: String,
   weather: [{
-    type: String,
+    actual: String,
     description: String,
   }],
   temperature: {

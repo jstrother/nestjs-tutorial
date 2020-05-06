@@ -4,7 +4,7 @@ export interface Weather extends Document {
   id?: string;
   city: string;
   weather: [{
-    type: string;
+    actual: string;
     description: string;
   }];
   temperature: {

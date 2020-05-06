@@ -6,6 +6,7 @@ import { AxiosResponse } from 'axios';
 import { catchError, map } from 'rxjs/operators';
 import { Model } from 'mongoose';
 import { Weather } from './interfaces/weather.interface';
+import { CreateWeatherDto } from './dto/create-weather.dto';
 import { convertKelvin } from '../functions/convertKelvin';
 
 @Injectable()
@@ -25,11 +26,11 @@ export class WeatherService {
       .get(`${this.url}${city}${this.appid}`)
       .pipe(
         map(({ data }: AxiosResponse): object => {
-          const cityWeather: object = {
+          const cityWeather: CreateWeatherDto = {
             city: data.name,
             weather: data.weather.map((typeOfWeather) => {
               return {
-                type: typeOfWeather.main,
+                actual: typeOfWeather.main,
                 description: typeOfWeather.description,
               };
             }),
@@ -41,7 +42,7 @@ export class WeatherService {
             },
             time: new Date(data.dt * 1000).toLocaleString(),
           };
-
+          
           this.weatherModel(cityWeather).save();
 
           return cityWeather;

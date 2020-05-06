@@ -1,7 +1,7 @@
 export class CreateWeatherDto {
   readonly city: string;
   readonly weather: [{
-    readonly type: string;
+    readonly actual: string;
     readonly description: string;
   }];
   readonly temperature: {
@@ -10,4 +10,5 @@ export class CreateWeatherDto {
     readonly min: string;
     readonly max: string;
   };
+  readonly time: string;
 }
